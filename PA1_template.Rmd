@@ -27,15 +27,19 @@ data <- read.csv("activity.csv")
 
 ```{r}
 steps_day <- aggregate(steps ~ date, data, sum)
-hist(steps_day$steps, main = paste("Total Steps Each Day"), col="green",xlab="Number of Steps")
+hist(steps_day$steps, main = paste("Total Steps Each Day"), col="deepskyblue3",xlab="Number of Steps")
 ```
 
 2. Calculate and report the mean and median total number of steps taken per day
+
+Mean total number of steps per day:
 
 ```{r}
 mean_steps <- mean(steps_day$steps)
 mean_steps
 ```
+
+Median total number of steps per day:
 
 ```{r}
 median_steps <- median(steps_day$steps)
@@ -52,6 +56,8 @@ plot(steps_int$interval,steps_int$steps, type="l", xlab="Interval", ylab="Number
 ```
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+The interval that contains the maximum number of steps is:
 
 ```{r}
 max_int <- steps_int[which.max(steps_int$steps),1]
@@ -94,26 +100,36 @@ steps_total <- aggregate(steps ~ date, data = data2, sum, na.rm = TRUE)
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 ```{r}
-hist(steps_total$steps, main = paste("Total Steps Each Day"), col="blue", xlab="Number of Steps")
+hist(steps_total$steps, main = paste("Total Steps Each Day"), col="deepskyblue", xlab="Number of Steps")
 
-hist(steps_day$steps, main = paste("Total Steps Each Day"), col="green", xlab="Number of Steps", add=T)
-legend("topright", c("Imputed", "Non-imputed"), col=c("blue", "green"), lwd=10)
+hist(steps_day$steps, main = paste("Total Steps Each Day"), col="deepskyblue3", xlab="Number of Steps", add=T)
+legend("topright", c("Imputed", "Non-imputed"), col=c("deepskyblue", "deepskyblue3"), lwd=10)
 ```
+
+Total mean:
 
 ```{r}
 meantotal <- mean(steps_total$steps)
 meantotal
 ```
 
+Total median:
+
 ```{r}
 mediantotal <- median(steps_total$steps)
 mediantotal
 ```
 
+Mean difference:
+
 ```{r}
 meandiff <- meantotal - mean_steps
 meandiff
+```
 
+Median difference:
+
+```{r}
 mediandiff <- mediantotal - median_steps
 mediandiff
 ```
@@ -130,10 +146,11 @@ data2$day = as.factor(ifelse(is.element(weekdays(as.Date(data2$date)), weekdays)
 steps_total <- aggregate(steps ~ interval + day, data2, mean)
 ```
 
-2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis):
 
 ```{r}
 library(lattice)
 
 xyplot(steps_total$steps ~ steps_total$interval | steps_total$day, main="Average Steps per Day by Interval", xlab= "Interval", ylab= "Steps", type= "l", layout=c(1,2))
 ``` 
+
